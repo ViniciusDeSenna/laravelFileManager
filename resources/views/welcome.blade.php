@@ -19,13 +19,39 @@
             </div>
         </div>
 
-        <form action="/file-upload" class="dropzone" id="my-awesome-dropzone"></form>
+        <form action="/file-upload" class="dropzone" id="dropzone"></form>
     </div>    
-    <script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var dropzone = document.getElementById('dropzone');
 
-    </script>
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  </body>
+    dropzone.addEventListener('drop', function (e) {
+      e.preventDefault();
+
+      var files = e.dataTransfer.files;
+      if (files.length > 0) {
+        handleFiles(files);
+      }
+  });
+
+  function handleFiles(files) {
+    for (var i = 0; i < files.length; i++) {
+      var file = files[i];
+      uploadFile(file);
+    }
+  }
+
+  function uploadFile(file) {
+    var formData = new FormData();
+    formData.append('file', file);
+    $.ajax({
+      url: '{{route}}'
+    })
+  }
+});
+</script>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
 </html>
