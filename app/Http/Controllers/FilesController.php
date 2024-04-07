@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Files;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use PHPUnit\Exception;
 use function Webmozart\Assert\Tests\StaticAnalysis\false;
 use function Webmozart\Assert\Tests\StaticAnalysis\true;
@@ -18,6 +19,8 @@ class FilesController extends Controller
                 $file = $request->file('file');
                 $filename = $file->getClientOriginalName();
                 $filetype = $file->getClientMimeType();
+
+                Storage::disk('local')->put('example.txt', 'Contents');
 
                 $file = new Files();
                 $file->name = $filename;
