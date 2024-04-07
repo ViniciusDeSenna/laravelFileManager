@@ -20,7 +20,7 @@ class FilesController extends Controller
                 $filename = $file->getClientOriginalName();
                 $filetype = $file->getClientMimeType();
 
-                Storage::disk('local')->put('example.txt', 'Contents');
+                Storage::disk('local')->put('teste/' . $filename, file_get_contents($file));
 
                 $file = new Files();
                 $file->name = $filename;
