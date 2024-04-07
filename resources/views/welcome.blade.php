@@ -15,6 +15,7 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2 class="text-center mb-4">Enviar arquivo</h2>
+            <input type="hidden" value="local/" id="fileLocal">
             <form action="{{route('files.upload')}}" class="dropzone" id="myDropzone">@csrf</form>
         </div>
     </div>
@@ -31,6 +32,10 @@
         maxFilesize: 2,
         maxFiles: 5,
         acceptedFiles: '.jpg, .jpeg, .png, .pdf',
+        sending: function(file, xhr, formData) {
+            let fileLocal = $('#fileLocal').val();
+            formData.append("fileLocal", fileLocal);
+        },
         success: function(file, data) {
             console.log(data)
         },

@@ -19,15 +19,13 @@ class FilesController extends Controller
                 $file = $request->file('file');
                 $filename = $file->getClientOriginalName();
                 $filetype = $file->getClientMimeType();
-
-                Storage::disk('local')->put('teste/' . $filename, file_get_contents($file));
-
+                $filepath = $request->fileLocal . $filename;
+                Storage::disk('local')->put($filepath, file_get_contents($file));
                 $file = new Files();
                 $file->name = $filename;
                 $file->type = $filetype;
-                $file->path = 'teste';
+                $file->path = $filepath;
                 $file->save();
-
                 return response()->json(['success'=>true, 'message'=>'Arquivo enviado']);
             } else {
              return response()->json(['success'=>false, 'message'=>'Não foi possivel encontrar seus arquivos']);
