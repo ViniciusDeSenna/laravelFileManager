@@ -45,7 +45,15 @@
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
-      url: '{{route}}'
+      url: '{{route('')}}',
+      type: 'POST',
+      data: formData,
+      success: function(response){
+
+      },
+      error: function(response){
+        
+      }
     })
   }
 });
