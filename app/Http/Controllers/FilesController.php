@@ -15,7 +15,8 @@ class FilesController extends Controller
 
     public function viewFiles()
     {
-        return view('welcome');
+        $files = Files::all();
+        return view('welcome', ['files'=>$files]);
     }
     public function upFiles(Request $request)
     {

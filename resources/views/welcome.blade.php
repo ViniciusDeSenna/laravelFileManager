@@ -20,7 +20,22 @@
         </div>
     </div>
 </div>
-
+@if(isset($files))
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h2 class="text-center mb-4">Arquivos Disponíveis</h2>
+                <ul class="list-group">
+                    @foreach($files as $file)
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <a href="#">{{$file->name}}</a>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </div>
+    </div>
+@endif
 
 <!-- Adicionando jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
