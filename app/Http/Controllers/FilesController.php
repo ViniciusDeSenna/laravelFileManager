@@ -12,6 +12,11 @@ use function Webmozart\Assert\Tests\StaticAnalysis\true;
 
 class FilesController extends Controller
 {
+
+    public function viewFiles()
+    {
+        return view('welcome');
+    }
     public function upFiles(Request $request)
     {
         try {
