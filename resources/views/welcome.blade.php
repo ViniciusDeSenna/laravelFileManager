@@ -15,7 +15,6 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2 class="text-center mb-4">Enviar arquivo</h2>
-
             <form action="{{route('files.upload')}}" class="dropzone" id="myDropzone">@csrf</form>
         </div>
     </div>
@@ -32,33 +31,13 @@
         maxFilesize: 2,
         maxFiles: 5,
         acceptedFiles: '.jpg, .jpeg, .png, .pdf',
-        success: function(file, response) {
-            console.log(response);
+        success: function(file, data) {
+            console.log(data)
         },
-        error: function(file, response) {
-            console.log(response);
+        error: function(data) {
+            alert(data)
         }
     };
-
-    {{--function enviar()--}}
-    {{--{--}}
-    {{--    let formData = new FormData();--}}
-    {{--    let fileInput = $('#file-input')[0];--}}
-    {{--    formData.append('file', fileInput);--}}
-    {{--    console.log(formData)--}}
-    {{--    $.ajax({--}}
-    {{--        type: 'POST',--}}
-    {{--        url: '{{route('files.upload')}}',--}}
-    {{--        data: formData,--}}
-    {{--        headers: {'X-CSRF-TOKEN': '{{csrf_token()}}'},--}}
-    {{--        success: function(data){--}}
-    {{--            console.log(data)--}}
-    {{--        },--}}
-    {{--        error: function(data){--}}
-    {{--            console.log(data)--}}
-    {{--        }--}}
-    {{--    });--}}
-    {{--}--}}
 </script>
 </body>
 </html>
