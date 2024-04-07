@@ -14,12 +14,24 @@
 <body>
 
 <div class="container">
-    <form action="/file-upload" class="dropzone" id="my-dropzone"></form>
+    <form action="{{route('files.upFiles')}}" class="dropzone" id="myDropzone">@csrf</form>
 </div>
 
 <script>
-
+    Dropzone.options.myDropzone = {
+        paramName: "file",
+        maxFilesize: 2,
+        maxFiles: 5,
+        acceptedFiles: '.jpg, .jpeg, .png, .pdf',
+        success: function(file, response) {
+            console.log(response);
+        },
+        error: function(file, response) {
+            console.log(response);
+        }
+    };
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>

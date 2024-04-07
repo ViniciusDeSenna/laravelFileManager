@@ -9,6 +9,6 @@ class FilesController extends Controller
 {
     public function upFiles(Request $request)
     {
-        dd($request);
+        dd('$request');
     }
 }
