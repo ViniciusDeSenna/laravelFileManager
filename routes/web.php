@@ -6,4 +6,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('upFiles/', [\App\Http\Controllers\FilesController::class, 'upFiles'])->name('files.upFiles');
+Route::post('files/upFiles/', [\App\Http\Controllers\FilesController::class, 'upFiles'])->name('files.upFiles');
