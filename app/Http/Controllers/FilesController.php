@@ -17,10 +17,11 @@ class FilesController extends Controller
             if (!is_null($request->file('file'))){
                 $file = $request->file('file');
                 $filename = $file->getClientOriginalName();
-                
+                $filetype = $file->getClientMimeType();
+
                 $file = new Files();
                 $file->name = $filename;
-                $file->type = 'teste';
+                $file->type = $filetype;
                 $file->path = 'teste';
                 $file->save();
 
