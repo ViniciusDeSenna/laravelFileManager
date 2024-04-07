@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Files;
+use App\Models\Folders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use PHPUnit\Exception;
@@ -13,10 +14,23 @@ use function Webmozart\Assert\Tests\StaticAnalysis\true;
 class FilesController extends Controller
 {
 
-    public function viewFiles()
+    public function viewFiles(Request $request)
     {
         $files = Files::all();
         return view('welcome', ['files'=>$files]);
+    }
+    public function newFolder(Request $request)
+    {
+        $folder = Folders::where('name','=',$request->name)->first();
+        if (is_null($folder)){
+            $folder = new Folders();
+            $folder->name = $request->name;
+            $folder->save();
+
+            return response()->json(['success'=>true, 'message'=>'Folder criado']);
+        } else {
+            return response()->json(['success'=>false, 'message'=>'Esse folder já existe']);
+        }
     }
     public function upFiles(Request $request)
     {
