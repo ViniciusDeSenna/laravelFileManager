@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('type');
             $table->string('name');
+            $table->foreignId('parent_folder_id');
+            $table->foreign('parent_folder_id')->references('id')->on('folders');
             $table->string('path');
             $table->timestamps();
         });
