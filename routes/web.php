@@ -7,4 +7,5 @@ Route::get('/', function () {
 });
 
 Route::get('files/', [\App\Http\Controllers\FilesController::class, 'viewFiles'])->name('files.view');
+Route::get('files/', [\App\Http\Controllers\FilesController::class, 'viewFiles'])->name('folder.view');
 Route::post('files/up_files/', [\App\Http\Controllers\FilesController::class, 'upFiles'])->name('files.upload');
