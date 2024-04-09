@@ -49,7 +49,7 @@
     function login()
     {
         $.ajax({
-            url: '{{route('folder.view')}}',
+            url: '{{route('folder.view', ['local'])}}',
             type: 'POST',
             data: {
                 _token: "{{ csrf_token() }}",

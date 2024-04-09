@@ -14,12 +14,13 @@ use function Webmozart\Assert\Tests\StaticAnalysis\true;
 class FilesController extends Controller
 {
 
-    public function viewFiles(Request $request)
+    public function viewFiles($caminho)
     {
-        $folder = Folders::where('name','=',$request->parent)->first();
+        $folder = Folders::where('name','=',$caminho)->first();
         $folders = Folders::where('parent_folder_id','=',$folder->id)->get();
         $files = Files::where('parent_folder_id','=',$folder->id)->get();
-        return view('welcome', ['files'=>$files, 'folders'=>$folders]);
+        dd($folder);
+        return view('dashboard', ['files'=>$files, 'folders'=>$folders]);
     }
     public function newFolder(Request $request)
     {
