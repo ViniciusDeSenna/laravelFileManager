@@ -11,10 +11,6 @@ class FilesController extends Controller
 {
     public function viewFiles($caminho)
 
-<<<<<<< Updated upstream
-    public function viewFiles($caminho)
-=======
->>>>>>> Stashed changes
     {
         $folder = Folders::where('name','=',$caminho)->first();
         $folders = Folders::where('parent_folder_id','=',$folder->id)->get();
