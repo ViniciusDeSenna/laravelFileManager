@@ -16,8 +16,10 @@ class FilesController extends Controller
 
     public function viewFiles(Request $request)
     {
-        $files = Files::all();
-        return view('welcome', ['files'=>$files]);
+        $folder = Folders::where('name','=',$request->parent)->first();
+        $folders = Folders::where('parent_folder_id','=',$folder->id)->get();
+        $files = Files::where('parent_folder_id','=',$folder->id)->get();
+        return view('welcome', ['files'=>$files, 'folders'=>$folders]);
     }
     public function newFolder(Request $request)
     {

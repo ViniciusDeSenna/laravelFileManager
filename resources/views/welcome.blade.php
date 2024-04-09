@@ -35,7 +35,7 @@
                 <div class="form-group">
                     <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Entrar</button>
+                <button type="button" class="btn btn-primary btn-block" onclick="login()">Entrar</button>
             </form>
         </div>
     </div>
@@ -49,7 +49,21 @@
     function login()
     {
         $.ajax({
-            url: '{{route('files.view')}}'
+            url: '{{route('folder.view')}}',
+            type: 'POST',
+            data: {
+                _token: "{{ csrf_token() }}",
+                parent: 'local/'
+            },
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (data){
+                console.log(data)
+            },
+            error: function (data){
+                console.log(data)
+            }
         })
     }
 </script>
