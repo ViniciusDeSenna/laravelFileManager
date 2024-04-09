@@ -8,25 +8,27 @@ return new class extends Migration
 {
     /**
      * Run the migrations.
+     *
+     * @return void
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('files', function (Blueprint $table) {
+        Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->string('type');
             $table->string('name');
             $table->foreignId('parent_folder_id');
             $table->foreign('parent_folder_id')->references('id')->on('folders');
-            $table->string('path');
             $table->timestamps();
         });
     }
 
     /**
      * Reverse the migrations.
+     *
+     * @return void
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('files');
+        Schema::dropIfExists('folders');
     }
 };

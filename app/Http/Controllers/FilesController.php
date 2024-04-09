@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Files;
 use App\Models\Folders;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use PHPUnit\Exception;
-use function Webmozart\Assert\Tests\StaticAnalysis\false;
-use function Webmozart\Assert\Tests\StaticAnalysis\true;
 
 class FilesController extends Controller
 {
-
     public function viewFiles($caminho)
+
+<<<<<<< Updated upstream
+    public function viewFiles($caminho)
+=======
+>>>>>>> Stashed changes
     {
         $folder = Folders::where('name','=',$caminho)->first();
         $folders = Folders::where('parent_folder_id','=',$folder->id)->get();
@@ -51,7 +51,7 @@ class FilesController extends Controller
                 $file->save();
                 return response()->json(['success'=>true, 'message'=>'Arquivo enviado']);
             } else {
-             return response()->json(['success'=>false, 'message'=>'Não foi possivel encontrar seus arquivos']);
+                return response()->json(['success'=>false, 'message'=>'Não foi possivel encontrar seus arquivos']);
             }
         }   catch (\Exception $exception){
             return response()->json(['success'=>false, 'message' => 'Erro:' . $exception]);
