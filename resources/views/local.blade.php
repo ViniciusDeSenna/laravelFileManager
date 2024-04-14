@@ -4,8 +4,8 @@
         <div class="row">
             <div class="col-md-6 offset-md-3">
                 <h2 class="text-center mb-4">Enviar arquivo</h2>
-                <input type="hidden" value="local/" id="fileLocal">
-                <form action="{{route('files.upload')}}" class="dropzone" id="myDropzone">@csrf</form>
+                <input type="hidden" value="{{$folder->id}}" id="fileLocal">
+                <form action="{{route('files.upload')}}" method="POST" class="dropzone" id="myDropzone">@csrf</form>
             </div>
         </div>
     @if(isset($files))
@@ -39,7 +39,7 @@
                 console.log(data)
             },
             error: function(data) {
-                alert(data)
+                console.log(data)
             }
         };
     </script>

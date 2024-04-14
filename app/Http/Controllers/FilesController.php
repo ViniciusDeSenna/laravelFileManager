@@ -15,7 +15,7 @@ class FilesController extends Controller
         $folder = FoldersModel::where('name','=',$caminho)->first();
         $folders = FoldersModel::where('parent_folder_id','=',$folder->id)->get();
         $files = FilesModel::where('parent_folder_id','=',$folder->id)->get();
-        return view('local', ['files'=>$files, 'folders'=>$folders]);
+        return view('local', ['folder' => $folder, 'files'=>$files, 'folders'=>$folders]);
     }
     public function newFolder(Request $request)
     {
@@ -34,15 +34,23 @@ class FilesController extends Controller
     {
         try {
             if (!is_null($request->file('file'))){
+
+                //Pega os dados do arquivo
                 $file = $request->file('file');
                 $filename = $file->getClientOriginalName();
                 $filetype = $file->getClientMimeType();
-                $filepath = $request->fileLocal . $filename;
+                $filepath = $request->fileLocal . '/' . $filename;
+
+                //Salva no storage
                 Storage::disk('local')->put($filepath, file_get_contents($file));
+
+
+                //Salva o caminho e os dados no banco
                 $file = new FilesModel();
                 $file->name = $filename;
                 $file->type = $filetype;
                 $file->path = $filepath;
+                $file->parent_folder_id = $request->fileLocal;
                 $file->save();
                 return response()->json(['success'=>true, 'message'=>'Arquivo enviado']);
             } else {

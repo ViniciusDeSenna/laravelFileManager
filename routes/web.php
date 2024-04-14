@@ -18,4 +18,4 @@ Route::get('/', function () {
 });
 
 Route::get('files/{caminho}/', [\App\Http\Controllers\FilesController::class, 'viewFiles'])->name('folder.view');
-Route::post('files/up_files/', [\App\Http\Controllers\FilesController::class, 'upFiles'])->name('files.upload');
+Route::post('files/upload/', [\App\Http\Controllers\FilesController::class, 'upFiles'])->name('files.upload');
