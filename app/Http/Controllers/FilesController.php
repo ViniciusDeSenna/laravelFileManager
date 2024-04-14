@@ -15,7 +15,7 @@ class FilesController extends Controller
         $folder = FoldersModel::where('name','=',$caminho)->first();
         $folders = FoldersModel::where('parent_folder_id','=',$folder->id)->get();
         $files = FilesModel::where('parent_folder_id','=',$folder->id)->get();
-        return view('dashboard', ['files'=>$files, 'folders'=>$folders]);
+        return view('layout/dashboard/dashboard', ['files'=>$files, 'folders'=>$folders]);
     }
     public function newFolder(Request $request)
     {
