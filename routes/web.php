@@ -14,8 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('login');
 });
 
-Route::post('files/{caminho}/', [\App\Http\Controllers\FilesController::class, 'viewFiles'])->name('folder.view');
+Route::get('files/{caminho}/', [\App\Http\Controllers\FilesController::class, 'viewFiles'])->name('folder.view');
 Route::post('files/up_files/', [\App\Http\Controllers\FilesController::class, 'upFiles'])->name('files.upload');
