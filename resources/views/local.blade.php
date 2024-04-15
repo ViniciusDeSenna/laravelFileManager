@@ -1,13 +1,30 @@
 @extends('layout.dashboard')
 
 @section('content')
-        <div class="row">
-            <div class="col-md-6 offset-md-3">
-                <h2 class="text-center mb-4">Enviar arquivo</h2>
-                <input type="hidden" value="{{$folder->id}}" id="fileLocal">
-                <form action="{{route('files.upload')}}" method="POST" class="dropzone" id="myDropzone">@csrf</form>
-            </div>
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2 class="text-center mb-4">Enviar arquivo</h2>
+            <input type="hidden" value="{{$folder->parent_folder_id}}" id="fileLocal">
+            <form action="{{route('files.upload')}}" method="POST" class="dropzone" id="myDropzone">@csrf</form>
         </div>
+    </div>
+    @if(isset($folders))
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-6 offset-md-3">
+                    <h2 class="text-center mb-4">Pastas</h2>
+                    <ul class="list-group">
+                        @foreach($folders as $folder)
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <a href="{{route('folder.view', [$folder->name])}}">{{$folder->name}}</a>
+                            </li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" onclick="newFolder()">New Folder</button>
+        </div>
+    @endif
     @if(isset($files))
         <div class="container mt-5">
             <div class="row">
@@ -42,5 +59,40 @@
                 console.log(data)
             }
         };
+
+        function newFolder()
+        {
+            Swal.fire({
+                title: "Submit your Github username",
+                input: "text",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
+                showCancelButton: true,
+                confirmButtonText: "Look up",
+                showLoaderOnConfirm: true,
+                preConfirm: async (name) => {
+                    let fileLocal = $('#fileLocal').val();
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{route('folder.create')}}',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            name: name,
+                            parent_folder: fileLocal,
+                        },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response){
+                            console.log(response)
+                        }
+                    });
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                }
+            });
+        }
     </script>
 @endsection
