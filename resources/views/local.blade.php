@@ -16,7 +16,7 @@
                     <ul class="list-group">
                         @foreach($folders as $folder)
                             <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <a href="#">{{$folder->name}}</a>
+                                <a href="{{route('folder.view', [$folder->name])}}">{{$folder->name}}</a>
                             </li>
                         @endforeach
                     </ul>
