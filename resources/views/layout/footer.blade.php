@@ -5,6 +5,8 @@
 <script src="{{asset('assets/vendor/jquery-easing/jquery.easing.min.js')}}s"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('assets/js/sb-admin-2.min.js')}}"></script>
+<!-- Sweet alert 2-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <!-- Page level plugins -->
 {{--<script src="vendor/chart.js/Chart.min.js"></script>--}}
 <!-- Page level custom scripts -->
