@@ -21,8 +21,8 @@
                         @endforeach
                     </ul>
                 </div>
-                <button>New Folder</button>
             </div>
+            <button type="button" class="btn btn-primary" onclick="newFolder()">New Folder</button>
         </div>
     @endif
     @if(isset($files))
@@ -62,7 +62,37 @@
 
         function newFolder()
         {
-            Swal.fire("SweetAlert2 is working!");
+            Swal.fire({
+                title: "Submit your Github username",
+                input: "text",
+                inputAttributes: {
+                    autocapitalize: "off"
+                },
+                showCancelButton: true,
+                confirmButtonText: "Look up",
+                showLoaderOnConfirm: true,
+                preConfirm: async (name) => {
+                    let fileLocal = $('#fileLocal').val();
+                    $.ajax({
+                        type: 'POST',
+                        url: '{{route('folder.create')}}',
+                        data: {
+                            _token: '{{ csrf_token() }}',
+                            name: name,
+                            parent_folder: fileLocal,
+                        },
+                        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                        success: function(response){
+                            console.log(response)
+                        }
+                    });
+                },
+                allowOutsideClick: () => !Swal.isLoading()
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                }
+            });
         }
     </script>
 @endsection

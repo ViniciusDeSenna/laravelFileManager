@@ -6,6 +6,7 @@ use App\Models\FilesModel;
 use App\Models\FoldersModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Mockery\Exception;
 
 class FilesController extends Controller
 {
@@ -13,7 +14,7 @@ class FilesController extends Controller
 
     {
         $folder = FoldersModel::where('name','=',$caminho)->first();
-        $folders = FoldersModel::where('parent_folder_id','=',$folder->id)->get();
+        $folders = FoldersModel::where('parent_folder_id','=',$folder->id)->where('name','!=','local')->get();
         $files = FilesModel::where('parent_folder_id','=',$folder->id)->get();
         return view('local', ['folder' => $folder, 'files'=>$files, 'folders'=>$folders]);
     }
@@ -27,15 +28,20 @@ class FilesController extends Controller
 //    }
     public function newFolder(Request $request)
     {
-        $folder = Folders::where('name','=',$request->name)->first();
-        if (is_null($folder)){
-            $folder = new FoldersModel();
-            $folder->name = $request->name;
-            $folder->save();
+        try {
+            $folder = FoldersModel::where('name','=',$request->name)->first();
+            if (is_null($folder)){
+                $folder = new FoldersModel();
+                $folder->name = $request->name;
+                $folder->parent_folder_id = $request->parent_folder;
+                $folder->save();
 
-            return response()->json(['success'=>true, 'message'=>'Folder criado']);
-        } else {
-            return response()->json(['success'=>false, 'message'=>'Esse folder já existe']);
+                return response()->json(['success'=>true, 'message'=>'Folder criado']);
+            } else {
+                return response()->json(['success'=>false, 'message'=>'Esse folder já existe']);
+            }
+        }   catch (Exception $exception){
+            return response()->json(['success'=>false, 'message'=>'Erro: ' . $exception->getMessage()]);
         }
     }
     public function upFiles(Request $request)
