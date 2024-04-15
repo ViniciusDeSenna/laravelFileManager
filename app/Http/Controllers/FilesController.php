@@ -18,14 +18,19 @@ class FilesController extends Controller
         $files = FilesModel::where('parent_folder_id','=',$folder->id)->get();
         return view('local', ['folder' => $folder, 'files'=>$files, 'folders'=>$folders]);
     }
-//    private function gerarCaminho($parentFolder)
-//    {
-//        $parentOfParentFolder = FoldersModel::where('parent_folder_id','=',$parentFolder)->first();
-//        for ($i = $parentOfParentFolder->id; $i != 1; $i = $parentOfParentFolder->id){
-//            $parentOfParentFolder->id--;
-//        }
-//        dd($parentOfParentFolder);
-//    }
+    private function gerarCaminho($parentFolder)
+    {
+        $parentOfParentFolder = FoldersModel::where('parent_folder_id','=',$parentFolder)->first();
+        for ($i = $parentOfParentFolder->parent_folder_id; $i != 0; $i = $parentOfParentFolder->parent_folder_id){
+            $folder = FoldersModel::where('id','=',$i)->first();
+            $folders[] = $folder->name;
+            $folders = array_reverse($folders);
+            $parentOfParentFolder->parent_folder_id--;
+        }
+        array_push($folders, $parentOfParentFolder->name);
+        $caminho = implode('/', $folders);
+        return $caminho;
+    }
     public function newFolder(Request $request)
     {
         try {
@@ -48,14 +53,13 @@ class FilesController extends Controller
     {
         try {
             if (!is_null($request->file('file'))){
-//                $caminho = $this->gerarCaminho($request->fileLocal);
-//                dd($caminho);
+                $caminho = $this->gerarCaminho($request->fileLocal);
 
                 //Pega os dados do arquivo
                 $file = $request->file('file');
                 $filename = $file->getClientOriginalName();
                 $filetype = $file->getClientMimeType();
-                $filepath = $request->fileLocal . '/' . $filename;
+                $filepath = $caminho . '/' . $filename;
 
                 //Salva no storage
                 Storage::disk('local')->put($filepath, file_get_contents($file));
@@ -73,7 +77,7 @@ class FilesController extends Controller
                 return response()->json(['success'=>false, 'message'=>'Não foi possivel encontrar seus arquivos']);
             }
         }   catch (\Exception $exception){
-            return response()->json(['success'=>false, 'message' => 'Erro:' . $exception]);
+            return response()->json(['success'=>false, 'message' => 'Erro:' . $exception->getMessage()]);
         }
     }
 }

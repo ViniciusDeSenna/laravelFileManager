@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2 class="text-center mb-4">Enviar arquivo</h2>
-            <input type="hidden" value="{{$folder->id}}" id="fileLocal">
+            <input type="hidden" value="{{$folder->parent_folder_id}}" id="fileLocal">
             <form action="{{route('files.upload')}}" method="POST" class="dropzone" id="myDropzone">@csrf</form>
         </div>
     </div>
