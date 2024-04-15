@@ -17,6 +17,14 @@ class FilesController extends Controller
         $files = FilesModel::where('parent_folder_id','=',$folder->id)->get();
         return view('local', ['folder' => $folder, 'files'=>$files, 'folders'=>$folders]);
     }
+//    private function gerarCaminho($parentFolder)
+//    {
+//        $parentOfParentFolder = FoldersModel::where('parent_folder_id','=',$parentFolder)->first();
+//        for ($i = $parentOfParentFolder->id; $i != 1; $i = $parentOfParentFolder->id){
+//            $parentOfParentFolder->id--;
+//        }
+//        dd($parentOfParentFolder);
+//    }
     public function newFolder(Request $request)
     {
         $folder = Folders::where('name','=',$request->name)->first();
@@ -34,6 +42,8 @@ class FilesController extends Controller
     {
         try {
             if (!is_null($request->file('file'))){
+//                $caminho = $this->gerarCaminho($request->fileLocal);
+//                dd($caminho);
 
                 //Pega os dados do arquivo
                 $file = $request->file('file');
