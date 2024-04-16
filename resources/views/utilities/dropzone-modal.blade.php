@@ -34,3 +34,20 @@
         }
     };
 </script>
+<style>
+    .dropzone {
+        border: 2px dashed #3498db;
+        border-radius: 10px;
+        background-color: #f0f8ff;
+        padding: 20px;
+        margin-top: 20px;
+    }
+
+    .dropzone .dz-message {
+        color: #3498db;
+    }
+
+    .dropzone .dz-message * {
+        vertical-align: middle;
+    }
+</style>
