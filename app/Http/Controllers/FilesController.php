@@ -40,7 +40,7 @@ class FilesController extends Controller
                 $folder->parent_folder_id = $request->parent_folder;
                 $folder->save();
 
-                return response()->json(['success'=>true, 'message'=>'Folder criado']);
+                return response()->json(['success'=>true, 'message'=>'Folder criado com sucesso!']);
             } else {
                 return response()->json(['success'=>false, 'message'=>'Esse folder já existe']);
             }

@@ -28,6 +28,7 @@
         success: function(file, data) {
             console.log(data)
             $('#dropzoneModal').modal('hide');
+            location.reload();
         },
         error: function(data) {
             console.log(data)

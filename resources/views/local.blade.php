@@ -37,7 +37,7 @@
                         <a class="text-decoration-none" href="#">
                             <div class="card shadow-sm">
                                 <div class="card-img-top mt-3" style="height: 10em; overflow: hidden;">
-                                    <img src="{{asset('assets/TextLogo.png')}}" class="img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">
+                                    <img src="@if($file->type == ('image/jpeg' || 'image/png')) {{$file->path}} @else {{asset('assets/TextLogo.png')}} @endif" class="img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">
                                 </div>
                                 <div class="card-body py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">{{$file->name}}</h6>
@@ -94,6 +94,7 @@
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         success: function(response){
                             console.log(response)
+                            FA_ShowMessage(response)
                         }
                     });
                 },
