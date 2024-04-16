@@ -17,6 +17,6 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('files/{caminho}/', [\App\Http\Controllers\FilesController::class, 'viewFiles'])->name('folder.view');
+Route::get('files/{file_id}/', [\App\Http\Controllers\FilesController::class, 'viewFiles'])->name('folder.view');
 Route::post('folder/create/', [\App\Http\Controllers\FilesController::class, 'newFolder'])->name('folder.create');
 Route::post('files/upload/', [\App\Http\Controllers\FilesController::class, 'upFiles'])->name('files.upload');

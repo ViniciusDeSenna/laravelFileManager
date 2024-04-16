@@ -10,10 +10,9 @@ use Mockery\Exception;
 
 class FilesController extends Controller
 {
-    public function viewFiles($caminho)
-
+    public function viewFiles($id)
     {
-        $folder = FoldersModel::where('name','=',$caminho)->first();
+        $folder = FoldersModel::where('id','=',$id)->first();
         $folders = FoldersModel::where('parent_folder_id','=',$folder->id)->where('name','!=','local')->get();
         $files = FilesModel::where('parent_folder_id','=',$folder->id)->get();
         return view('local', ['folder' => $folder, 'files'=>$files, 'folders'=>$folders]);

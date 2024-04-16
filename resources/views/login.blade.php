@@ -46,7 +46,7 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <a href="{{route('folder.view', ['local'])}}" class="btn btn-primary btn-user btn-block">
+                                    <a href="{{route('folder.view', ['1'])}}" class="btn btn-primary btn-user btn-block">
                                         Login
                                     </a>
                                     <hr>

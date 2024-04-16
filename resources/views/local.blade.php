@@ -4,7 +4,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">@if($folder->name == 'local')My Storage @else {{$folder->name}} @endif</h1>
+            <h1 class="h3 mb-0 text-gray-800">@if($folder->name == 'local') My Storage @else {{$folder->name}} @endif</h1>
             <a class="btn btn-primary btn-icon-split" onclick="newFolder()">
                 <span class="icon text-white-50"><i class="fa fa-folder-plus"></i></span>
                 <span class="text">New Folder</span>
@@ -15,7 +15,7 @@
             <div class="row">
                 @foreach($folders as $item)
                     <div class="col-2">
-                        <a class="text-decoration-none" href="{{route('folder.view', [$item->name])}}">
+                        <a class="text-decoration-none" href="{{route('folder.view', [$item->id])}}">
                             <div class="card mb-4 border-bottom-primary shadow-sm">
                                 <div class="card-body">
                                     <span class="icon text-blue-50"><i class="fa fa-folder-open"></i></span>
