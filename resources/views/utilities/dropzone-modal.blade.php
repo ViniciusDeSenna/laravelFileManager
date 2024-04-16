@@ -27,6 +27,7 @@
         },
         success: function(file, data) {
             console.log(data)
+            $('#dropzoneModal').modal('hide');
         },
         error: function(data) {
             console.log(data)

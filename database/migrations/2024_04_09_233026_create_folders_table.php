@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('parent_folder_id');
             $table->foreign('parent_folder_id')->references('id')->on('folders');
+            $table->boolean('favorite')->default(false);
+            $table->boolean('active')->default(true);
             $table->timestamps();
         });
     }
