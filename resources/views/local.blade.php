@@ -4,6 +4,7 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <input type="hidden" id="fileLocal" value="{{$folder->id}}">
             <h1 class="h3 mb-0 text-gray-800">@if($folder->name == 'local') My Storage @else {{$folder->name}} @endif</h1>
             <a class="btn btn-primary btn-icon-split" onclick="newFolder()">
                 <span class="icon text-white-50"><i class="fa fa-folder-plus"></i></span>
