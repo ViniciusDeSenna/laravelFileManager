@@ -94,7 +94,7 @@
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                         success: function(response){
                             console.log(response)
-                            FA_ShowMessage(response)
+                            location.reload();
                         }
                     });
                 },
