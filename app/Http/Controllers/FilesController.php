@@ -79,4 +79,18 @@ class FilesController extends Controller
             return response()->json(['success'=>false, 'message' => 'Erro:' . $exception->getMessage()]);
         }
     }
+    public function favoriteFile(Request $request)
+    {
+        try {
+            $file = FilesModel::where('id','=',$request->id)->first();
+            if ($file->favorite == true){
+                $file->favorite = false;
+            } else {
+                $file->favorite = true;
+            }
+            $file->save();
+        }   catch (\Exception $exception){
+            return response()->json(['success'=>false, 'message'=>'Erro:' . $exception->getMessage()]);
+        }
+    }
 }
