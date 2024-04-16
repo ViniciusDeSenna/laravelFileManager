@@ -16,7 +16,7 @@
                 @foreach($folders as $folder)
                     <div class="col-4">
                         <a class="text-decoration-none" href="{{route('folder.view', [$folder->name])}}">
-                            <div class="card mb-4 border-bottom-primary">
+                            <div class="card mb-4 border-bottom-primary shadow-sm">
                                 <div class="card-body">
                                     <span class="icon text-blue-50"><i class="fa fa-folder-open"></i></span>
                                     {{$folder->name}}
@@ -27,23 +27,36 @@
                 @endforeach
             </div>
         @endif
-    </div>
-    @if(isset($files))
-        <div class="container mt-5">
+        <!-- Files -->
+        @if(isset($files))
             <div class="row">
-                <div class="col-md-6 offset-md-3">
-                    <h2 class="text-center mb-4">Arquivos Disponíveis</h2>
-                    <ul class="list-group">
-                        @foreach($files as $file)
-                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                <a href="#">{{$file->name}}</a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
+                @foreach($files as $file)
+                    <div class="col-4 mb-4">
+                        <a class="text-decoration-none" href="#">
+                            <div class="card shadow-sm">
+                                <img src="{{asset('assets/pdfLogo.png')}}" class="card-img-top" alt="..." style="height: 10em">
+                                <div class="card-body py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">{{$file->name}}</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" style="">
+                                            <div class="dropdown-header">File Functions:</div>
+                                            <a class="dropdown-item" href="#">Favorite</a>
+                                            <a class="dropdown-item" href="#">Download</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                @endforeach
             </div>
-        </div>
-    @endif
+        @endif
+    </div>
 
     <div class="row">
         <div class="col-md-6 offset-md-3">
