@@ -70,13 +70,12 @@
         function newFolder()
         {
             Swal.fire({
-                title: "Submit your Github username",
+                title: "Enter your folder name!",
                 input: "text",
-                inputAttributes: {
-                    autocapitalize: "off"
-                },
                 showCancelButton: true,
-                confirmButtonText: "Look up",
+                confirmButtonText: "Create Folder",
+                confirmButtonColor: '#2653d4',
+                reverseButtons: true,
                 showLoaderOnConfirm: true,
                 preConfirm: async (name) => {
                     let fileLocal = $('#fileLocal').val();
