@@ -13,13 +13,13 @@
         <!-- Folders -->
         @if(isset($folders))
             <div class="row">
-                @foreach($folders as $folder)
+                @foreach($folders as $item)
                     <div class="col-4">
-                        <a class="text-decoration-none" href="{{route('folder.view', [$folder->name])}}">
+                        <a class="text-decoration-none" href="{{route('folder.view', [$item->name])}}">
                             <div class="card mb-4 border-bottom-primary shadow-sm">
                                 <div class="card-body">
                                     <span class="icon text-blue-50"><i class="fa fa-folder-open"></i></span>
-                                    {{$folder->name}}
+                                    {{$item->name}}
                                 </div>
                             </div>
                         </a>
@@ -58,32 +58,15 @@
         @endif
     </div>
 
-    <div class="row">
-        <div class="col-md-6 offset-md-3">
-            <h2 class="text-center mb-4">Enviar arquivo</h2>
-            <input type="hidden" value="{{$folder->parent_folder_id}}" id="fileLocal">
-            <form action="{{route('files.upload')}}" method="POST" class="dropzone" id="myDropzone">@csrf</form>
-        </div>
-    </div>
+    <!-- Dropzone Modal -->
+    @include('utilities.dropzone-modal', ['folder' => $folder])
+
+    <!-- Dropzone Button -->
+    <a class="add_file rounded bg-gradient-primary" onclick="openDropzoneModal()">
+        <i class="fas fa-plus"></i>
+    </a>
 
     <script>
-        Dropzone.options.myDropzone = {
-            paramName: "file",
-            maxFilesize: 2,
-            maxFiles: 5,
-            acceptedFiles: '.jpg, .jpeg, .png, .pdf',
-            sending: function(file, xhr, formData) {
-                let fileLocal = $('#fileLocal').val();
-                formData.append("fileLocal", fileLocal);
-            },
-            success: function(file, data) {
-                console.log(data)
-            },
-            error: function(data) {
-                console.log(data)
-            }
-        };
-
         function newFolder()
         {
             Swal.fire({
@@ -118,5 +101,34 @@
                 }
             });
         }
+        function openDropzoneModal()
+        {
+            $('#dropzoneModal').modal('show');
+        }
     </script>
+    <style>
+        .add_file {
+            position: fixed;
+            right: 1rem;
+            bottom: 1rem;
+            width: 2.75rem;
+            height: 2.75rem;
+            text-align: center;
+            color: #fff;
+            background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+            line-height: 46px;
+        }
+
+        .add_file:focus, .add_file:hover {
+            color: white;
+        }
+
+        .add_file:hover {
+            background: #5a5c69;
+        }
+
+        .add_file i {
+            font-weight: 800;
+        }
+    </style>
 @endsection
