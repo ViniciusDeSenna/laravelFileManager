@@ -14,7 +14,7 @@
         @if(isset($folders))
             <div class="row">
                 @foreach($folders as $item)
-                    <div class="col-4">
+                    <div class="col-2">
                         <a class="text-decoration-none" href="{{route('folder.view', [$item->name])}}">
                             <div class="card mb-4 border-bottom-primary shadow-sm">
                                 <div class="card-body">
@@ -31,10 +31,12 @@
         @if(isset($files))
             <div class="row">
                 @foreach($files as $file)
-                    <div class="col-4 mb-4">
+                    <div class="col-2 mb-4">
                         <a class="text-decoration-none" href="#">
                             <div class="card shadow-sm">
-                                <img src="{{asset('assets/pdfLogo.png')}}" class="card-img-top" alt="..." style="height: 10em">
+                                <div class="card-img-top mt-3" style="height: 10em; overflow: hidden;">
+                                    <img src="{{asset('assets/TextLogo.png')}}" class="img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">
+                                </div>
                                 <div class="card-body py-3 d-flex flex-row align-items-center justify-content-between">
                                     <h6 class="m-0 font-weight-bold text-primary">{{$file->name}}</h6>
                                     <div class="dropdown no-arrow">
