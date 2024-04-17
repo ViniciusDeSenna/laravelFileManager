@@ -6,13 +6,13 @@ use App\Models\FilesModel;
 use App\Models\FoldersModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Mockery\Exception;
 
 class FilesController extends Controller
 {
     public function viewFiles($id, $viewMode)
     {
-//        dd($viewMode);
         $folder = FoldersModel::where('id','=',$id)->first();
         $folders = FoldersModel::where('parent_folder_id','=',$folder->id)->where('name','!=','local')->get();
         $files = FilesModel::where('parent_folder_id','=',$folder->id)->get();

@@ -19,7 +19,100 @@
             </div>
         </div>
         <div id="viewContent">
+            <div class="" id="viewCard">
+                <!-- Folders -->
+                @if(isset($folders))
+                    <div class="row">
+                        @foreach($folders as $item)
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                <a class="text-decoration-none" href="{{route('folder.view', ['file_id' => $item->id, 'view_mode' => 'card'])}}">
+                                    <div class="card mb-4 border-bottom-primary shadow-sm">
+                                        <div class="card-body">
+                                            <span class="icon text-blue-50"><i class="fa fa-folder-open"></i></span>
+                                            {{$item->name}}
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+                <div class="m-5"></div>
+                <!-- Files -->
+                @if(isset($files))
+                    <div class="row">
+                        @foreach($files as $file)
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4">
+                                <a class="text-decoration-none" href="#">
+                                    <div class="card shadow-sm">
+                                        <div class="card-img-top mt-3" style="height: 10em; overflow: hidden;">
+                                            <img src="@if($file->type == ('image/jpeg' || 'image/png')) {{$file->path}} @else {{asset('assets/TextLogo.png')}} @endif" class="img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">
+                                        </div>
+                                        <div class="card-body py-3 d-flex flex-row align-items-center justify-content-between">
+                                            <h6 class="m-0 font-weight-bold text-primary">{{$file->name}}</h6>
+                                            <div class="dropdown no-arrow">
+                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" style="">
+                                                    <div class="dropdown-header">File Functions:</div>
+                                                    <a class="dropdown-item" onclick="makeFavorite({{$file->id}})">Favorite</a>
+                                                    <a class="dropdown-item" >Download</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a class="dropdown-item" >Delete</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+            <div class="d-none" id="viewList">
+                <!-- Folders -->
+                @if(isset($folders))
+                    <div class="list-group">
+                        @foreach($folders as $item)
+                            <a href="{{route('folder.view', ['file_id' => $item->id, 'view_mode' => 'card'])}}" class="list-group-item list-group-item-action">
+                                <i class="fa fa-folder-open mr-2 text-primary"></i> {{$item->name}}
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
 
+                <div class="m-5"></div>
+
+                <!-- Files -->
+                @if(isset($files))
+                    <div class="list-group">
+                        @foreach($files as $file)
+                            <div class="list-group-item list-group-item-action">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="#">
+                                        <div>
+                                            <i class="fas fa-file mr-2 text-primary"></i>{{$file->name}}
+                                        </div>
+                                    </a>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" style="">
+                                            <div class="dropdown-header">File Functions:</div>
+                                            <a class="dropdown-item" onclick="makeFavorite({{$file->id}})">Favorite</a>
+                                            <a class="dropdown-item" >Download</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" >Delete</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
         </div>
     </div>
 
@@ -33,43 +126,27 @@
 
     <script>
         $(function (){
-            // viewMode();
+            viewMode();
         })
-        function carregarArquivos()
+        function viewMode()
         {
-            let viewMode = $('#viewMode').val()
-            let url = '{{route('folder.view', ['file_id' => '#ID#', 'view_mode' => '#VIEW#'])}}';
-            url = url.replace('#ID#', '{{$folder->id}}');
-            url = url.replace('#VIEW#', viewMode);
-            console.log(url)
-            console.log(url)
-            $.ajax({
-                type: 'GET',
-                url: url,
-                data: {
-                    _token: '{{ csrf_token() }}',
-                },
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                success: function (response) {
-                    console.log(response)
-                    location.reload();
-                }
-            });
+            let viewMode = $('#viewMode');
+            let textButtonView = $('#viewButtonText');
+            let divCard = $('#viewCard');
+            let divList = $('#viewList');
+
+            if (viewMode.val() == 'card'){
+                divCard.addClass('d-none');
+                divList.removeClass('d-none');
+                viewMode.val('list');
+                textButtonView.text('View in card');
+            } else {
+                divList.addClass('d-none');
+                divCard.removeClass('d-none');
+                viewMode.val('card');
+                textButtonView.text('View in list');
+            }
         }
-        {{--function viewMode()--}}
-        {{--{--}}
-        {{--    let viewMode = $('#viewMode');--}}
-        {{--    let contentDiv = $('#viewContent');--}}
-        {{--    if (viewMode.val() == 'card'){--}}
-        {{--        contentDiv.empty();--}}
-        {{--        contentDiv.append('@include('utilities.list', ['folders' => $folders, 'files' => $files])')--}}
-        {{--        viewMode.val('list')--}}
-        {{--    } else {--}}
-        {{--        contentDiv.empty();--}}
-        {{--        contentDiv.append('@include('utilities.card', ['folders' => $folders, 'files' => $files])')--}}
-        {{--        viewMode.val('card')--}}
-        {{--    }--}}
-        {{--}--}}
         function newFolder()
         {
             Swal.fire({
@@ -120,6 +197,28 @@
                 }
             });
         }
+
+        {{--function carregarArquivos()--}}
+        {{--{--}}
+        {{--    let viewMode = $('#viewMode').val()--}}
+        {{--    let url = '{{route('folder.view', ['file_id' => '#ID#', 'view_mode' => '#VIEW#'])}}';--}}
+        {{--    url = url.replace('#ID#', '{{$folder->id}}');--}}
+        {{--    url = url.replace('#VIEW#', viewMode);--}}
+        {{--    console.log(url)--}}
+        {{--    console.log(url)--}}
+        {{--    $.ajax({--}}
+        {{--        type: 'GET',--}}
+        {{--        url: url,--}}
+        {{--        data: {--}}
+        {{--            _token: '{{ csrf_token() }}',--}}
+        {{--        },--}}
+        {{--        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},--}}
+        {{--        success: function (response) {--}}
+        {{--            console.log(response)--}}
+        {{--            location.reload();--}}
+        {{--        }--}}
+        {{--    });--}}
+        {{--}--}}
 
         function openDropzoneModal() {
             $('#dropzoneModal').modal('show');
