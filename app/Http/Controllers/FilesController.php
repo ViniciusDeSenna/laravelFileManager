@@ -11,54 +11,8 @@ use Mockery\Exception;
 
 class FilesController extends Controller
 {
-    public function viewFiles($id, $viewMode)
-    {
-        $folder = FoldersModel::where('id','=',$id)->first();
-        $folders = FoldersModel::where('parent_folder_id','=',$folder->id)->where('name','!=','local')->get();
-        $files = FilesModel::where('parent_folder_id','=',$folder->id)->get();
-        return view('local', ['folder' => $folder, 'files'=>$files, 'folders'=>$folders]);
-    }
-    private function gerarCaminho($parentFolder)
-    {
-        $parentOfParentFolder = FoldersModel::where('parent_folder_id','=',$parentFolder)->first();
 
-        for ($i = $parentOfParentFolder->parent_folder_id; $i != 0; $i = $parentOfParentFolder->parent_folder_id){
-            $folder = FoldersModel::where('id','=',$i)->first();
-            $folders[] = $folder->name;
-            $folders = array_reverse($folders);
-            $parentOfParentFolder->parent_folder_id--;
-        }
-
-        array_push($folders, $parentOfParentFolder->name);
-
-        $caminho = implode('/', $folders);
-
-        if ($caminho == 'local/local'){
-            $caminho = 'local';
-        }
-
-        return $caminho;
-    }
-    public function newFolder(Request $request)
-    {
-        try {
-            $folder = FoldersModel::where('name','=',$request->name)->first();
-            if (is_null($folder)){
-                $folder = new FoldersModel();
-                $folder->name = $request->name;
-                $folder->parent_folder_id = $request->parent_folder;
-                $folder->save();
-
-                return response()->json(['success'=>true, 'message'=>'Folder criado com sucesso!']);
-            } else {
-                return response()->json(['success'=>false, 'message'=>'Esse folder já existe']);
-            }
-        }
-        catch (Exception $exception){
-            return response()->json(['success'=>false, 'message'=>'Erro: ' . $exception->getMessage()]);
-        }
-    }
-    public function upFiles(Request $request)
+    public function newFile(Request $request)
     {
         try {
             if (!is_null($request->file('file'))){
@@ -103,7 +57,6 @@ class FilesController extends Controller
             return response()->json(['success'=>false, 'message'=>'Erro:' . $exception->getMessage()]);
         }
     }
-
     public function downloadFile(Request $request)
     {
         try {
@@ -117,9 +70,6 @@ class FilesController extends Controller
             return response()->json(['success' => false, 'message' => 'Erro: ' . $exception->getMessage()]);
         }
     }
-
-
-
-
-
+    public function deleteFile(Request $request){}
+    public function renameFile(Request $request){}
 }

@@ -6,6 +6,7 @@
         <div class="dropdown-header">File Functions:</div>
         <a class="dropdown-item" onclick="makeFavorite({{$file->id}})">Favorite</a>
         <a class="dropdown-item" onclick="downloadFile({{$file->id}})">Download</a>
+        <a class="dropdown-item" onclick="">Rename</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" >Delete</a>
     </div>
