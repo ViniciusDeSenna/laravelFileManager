@@ -50,18 +50,7 @@
                                         </div>
                                         <div class="card-body py-3 d-flex flex-row align-items-center justify-content-between">
                                             <h6 class="m-0 font-weight-bold text-primary">{{$file->name}}</h6>
-                                            <div class="dropdown no-arrow">
-                                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" style="">
-                                                    <div class="dropdown-header">File Functions:</div>
-                                                    <a class="dropdown-item" onclick="makeFavorite({{$file->id}})">Favorite</a>
-                                                    <a class="dropdown-item" >Download</a>
-                                                    <div class="dropdown-divider"></div>
-                                                    <a class="dropdown-item" >Delete</a>
-                                                </div>
-                                            </div>
+                                            @include('utilities.file-dropdown-menu')
                                         </div>
                                     </div>
                                 </a>
@@ -95,18 +84,7 @@
                                             <i class="fas fa-file mr-2 text-primary"></i>{{$file->name}}
                                         </div>
                                     </a>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" style="">
-                                            <div class="dropdown-header">File Functions:</div>
-                                            <a class="dropdown-item" onclick="makeFavorite({{$file->id}})">Favorite</a>
-                                            <a class="dropdown-item" >Download</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" >Delete</a>
-                                        </div>
-                                    </div>
+                                    @include('utilities.file-dropdown-menu')
                                 </div>
                             </div>
                         @endforeach
@@ -182,6 +160,11 @@
             });
         }
 
+        function downloadFile(idFile)
+        {
+            window.location.href = '{{route('files.download')}}?id=' + idFile;
+        }
+
         function makeFavorite(idFile) {
             $.ajax({
                 type: 'POST',
@@ -197,28 +180,6 @@
                 }
             });
         }
-
-        {{--function carregarArquivos()--}}
-        {{--{--}}
-        {{--    let viewMode = $('#viewMode').val()--}}
-        {{--    let url = '{{route('folder.view', ['file_id' => '#ID#', 'view_mode' => '#VIEW#'])}}';--}}
-        {{--    url = url.replace('#ID#', '{{$folder->id}}');--}}
-        {{--    url = url.replace('#VIEW#', viewMode);--}}
-        {{--    console.log(url)--}}
-        {{--    console.log(url)--}}
-        {{--    $.ajax({--}}
-        {{--        type: 'GET',--}}
-        {{--        url: url,--}}
-        {{--        data: {--}}
-        {{--            _token: '{{ csrf_token() }}',--}}
-        {{--        },--}}
-        {{--        headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},--}}
-        {{--        success: function (response) {--}}
-        {{--            console.log(response)--}}
-        {{--            location.reload();--}}
-        {{--        }--}}
-        {{--    });--}}
-        {{--}--}}
 
         function openDropzoneModal() {
             $('#dropzoneModal').modal('show');

@@ -21,14 +21,22 @@ class FilesController extends Controller
     private function gerarCaminho($parentFolder)
     {
         $parentOfParentFolder = FoldersModel::where('parent_folder_id','=',$parentFolder)->first();
+
         for ($i = $parentOfParentFolder->parent_folder_id; $i != 0; $i = $parentOfParentFolder->parent_folder_id){
             $folder = FoldersModel::where('id','=',$i)->first();
             $folders[] = $folder->name;
             $folders = array_reverse($folders);
             $parentOfParentFolder->parent_folder_id--;
         }
+
         array_push($folders, $parentOfParentFolder->name);
+
         $caminho = implode('/', $folders);
+
+        if ($caminho == 'local/local'){
+            $caminho = 'local';
+        }
+
         return $caminho;
     }
     public function newFolder(Request $request)
@@ -45,7 +53,8 @@ class FilesController extends Controller
             } else {
                 return response()->json(['success'=>false, 'message'=>'Esse folder já existe']);
             }
-        }   catch (Exception $exception){
+        }
+        catch (Exception $exception){
             return response()->json(['success'=>false, 'message'=>'Erro: ' . $exception->getMessage()]);
         }
     }
@@ -54,7 +63,6 @@ class FilesController extends Controller
         try {
             if (!is_null($request->file('file'))){
                 $caminho = $this->gerarCaminho($request->fileLocal);
-
                 //Pega os dados do arquivo
                 $file = $request->file('file');
                 $filename = $file->getClientOriginalName();
@@ -76,7 +84,8 @@ class FilesController extends Controller
             } else {
                 return response()->json(['success'=>false, 'message'=>'Não foi possivel encontrar seus arquivos']);
             }
-        }   catch (\Exception $exception){
+        }
+        catch (\Exception $exception){
             return response()->json(['success'=>false, 'message' => 'Erro:' . $exception->getMessage()]);
         }
     }
@@ -94,4 +103,23 @@ class FilesController extends Controller
             return response()->json(['success'=>false, 'message'=>'Erro:' . $exception->getMessage()]);
         }
     }
+
+    public function downloadFile(Request $request)
+    {
+        try {
+            $file = FilesModel::where('id', $request->id)->first();
+
+            header('Content-type:' . $file->type);
+
+            return Storage::download($file->path, $file->name);
+
+        } catch (\Exception $exception) {
+            return response()->json(['success' => false, 'message' => 'Erro: ' . $exception->getMessage()]);
+        }
+    }
+
+
+
+
+
 }
