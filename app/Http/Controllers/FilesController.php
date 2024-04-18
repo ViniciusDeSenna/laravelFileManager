@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Util\Util;
 use App\Models\FilesModel;
 use App\Models\FoldersModel;
 use Illuminate\Http\Request;
@@ -16,24 +17,22 @@ class FilesController extends Controller
     {
         try {
             if (!is_null($request->file('file'))){
-                $caminho = $this->gerarCaminho($request->fileLocal);
-                //Pega os dados do arquivo
+                $util = new \App\Classes\Util();
+                $caminho = $util->makePath($request->fileLocal);
                 $file = $request->file('file');
                 $filename = $file->getClientOriginalName();
                 $filetype = $file->getClientMimeType();
                 $filepath = $caminho . '/' . $filename;
 
-                //Salva no storage
                 Storage::disk(env('FILESYSTEM_DISK'))->put($filepath, file_get_contents($file));
 
-
-                //Salva o caminho e os dados no banco
                 $file = new FilesModel();
                 $file->name = $filename;
                 $file->type = $filetype;
                 $file->path = $filepath;
                 $file->parent_folder_id = $request->fileLocal;
                 $file->save();
+
                 return response()->json(['success'=>true, 'message'=>'Arquivo enviado']);
             } else {
                 return response()->json(['success'=>false, 'message'=>'Não foi possivel encontrar seus arquivos']);
