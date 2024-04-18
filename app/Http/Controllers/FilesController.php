@@ -62,7 +62,7 @@ class FilesController extends Controller
                 $filepath = $caminho . '/' . $filename;
 
                 //Salva no storage
-                Storage::disk('local')->put($filepath, file_get_contents($file));
+                Storage::disk(env('FILESYSTEM_DISK'))->put($filepath, file_get_contents($file));
 
 
                 //Salva o caminho e os dados no banco
