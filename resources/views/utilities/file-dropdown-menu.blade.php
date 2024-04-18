@@ -11,3 +11,25 @@
         <a class="dropdown-item" >Delete</a>
     </div>
 </div>
+
+<script>
+    {{--function downloadFile(idFile) {--}}
+    {{--    window.location.href = '{{route('files.download')}}?id=' + idFile;--}}
+    {{--}--}}
+
+    function makeFavorite(idFile) {
+        $.ajax({
+            type: 'POST',
+            url: '{{route('files.favorite')}}',
+            data: {
+                _token: '{{ csrf_token() }}',
+                id: idFile,
+            },
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+            success: function (response) {
+                console.log(response)
+                location.reload();
+            }
+        });
+    }
+</script>

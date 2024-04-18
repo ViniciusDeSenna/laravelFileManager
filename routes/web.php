@@ -27,3 +27,4 @@ Route::post('folder/create/', [\App\Http\Controllers\FilesController::class, 'ne
 Route::post('files/upload/', [\App\Http\Controllers\FilesController::class, 'newFile'])->name('files.upload');
 Route::post('files/favorite', [\App\Http\Controllers\FilesController::class, 'favoriteFile'])->name('files.favorite');
 Route::get('files/download', [\App\Http\Controllers\FilesController::class, 'downloadFile'])->name('files.download');
+Route::get('files/download', [\App\Http\Controllers\FilesController::class, 'returnTempLink'])->name('files.templink');

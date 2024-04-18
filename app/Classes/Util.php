@@ -3,6 +3,7 @@
 namespace App\Classes;
 
 use App\Models\FoldersModel;
+use Illuminate\Support\Facades\Storage;
 
 class Util
 {
@@ -21,5 +22,10 @@ class Util
             $caminho = 'local';
         }
         return $caminho;
+    }
+
+    public static function displayImage($path)
+    {
+        return Storage::disk('r2')->temporaryUrl($path, now()->addMinutes(20));
     }
 }

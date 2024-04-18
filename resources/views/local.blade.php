@@ -47,11 +47,10 @@
                     <div class="row">
                         @foreach($files as $file)
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4">
-                                <a class="text-decoration-none" href="#" onclick="openImageModal()">
+                                <a class="text-decoration-none" href="#" onclick="openImageModal({{$file->path}})">
                                     <div class="card shadow-sm">
                                         <div class="card-img-top mt-3" style="height: 10em; overflow: hidden;">
-                                            <img src="{{asset('assets/TextLogo.png')}}" class="img-fluid" alt="..."
-                                                 style="height: 100%; width: 100%; object-fit: contain;">
+                                            <img src="{{\App\Classes\Util::displayImage($file->path)}}" class="img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">
                                         </div>
                                         <div
                                             class="card-body py-3 d-flex flex-row align-items-center justify-content-between">
@@ -165,26 +164,6 @@
             }).then((result) => {
                 if (result.isConfirmed) {
 
-                }
-            });
-        }
-
-        function downloadFile(idFile) {
-            window.location.href = '{{route('files.download')}}?id=' + idFile;
-        }
-
-        function makeFavorite(idFile) {
-            $.ajax({
-                type: 'POST',
-                url: '{{route('files.favorite')}}',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    id: idFile,
-                },
-                headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                success: function (response) {
-                    console.log(response)
-                    location.reload();
                 }
             });
         }
