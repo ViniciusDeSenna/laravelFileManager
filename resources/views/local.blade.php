@@ -4,71 +4,137 @@
     <div class="container-fluid">
         <!-- Page Heading -->
         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">@if($folder->name == 'local')My Storage @else {{$folder->name}} @endif</h1>
-            <a class="btn btn-primary btn-icon-split" onclick="newFolder()">
-                <span class="icon text-white-50"><i class="fa fa-folder-plus"></i></span>
-                <span class="text">New Folder</span>
-            </a>
-        </div>
-        <!-- Folders -->
-        @if(isset($folders))
-            <div class="row">
-                @foreach($folders as $item)
-                    <div class="col-4">
-                        <a class="text-decoration-none" href="{{route('folder.view', [$item->name])}}">
-                            <div class="card mb-4 border-bottom-primary shadow-sm">
-                                <div class="card-body">
-                                    <span class="icon text-blue-50"><i class="fa fa-folder-open"></i></span>
-                                    {{$item->name}}
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                @endforeach
+            <input type="hidden" id="fileLocal" value="{{$folder->id}}">
+            <input type="hidden" id="viewMode" value="card">
+            <h1 class="h3 mb-0 text-gray-800">@if($folder->name == 'local')
+                    My Storage
+                @else
+                    {{$folder->name}}
+                @endif</h1>
+            <div>
+                <a class="btn btn-primary btn-icon-split" onclick="newFolder()">
+                    <span class="icon text-white-50"><i class="fa fa-folder-plus"></i></span>
+                    <span class="text d-none d-sm-block">New Folder</span>
+                </a>
+                <a class="btn btn-danger btn-icon-split" onclick="viewMode()">
+                    <span class="icon text-white-50"><i class="fas fa-arrow-right"></i></span>
+                    <span class="text d-none d-sm-block" id="viewButtonText">View in list</span>
+                </a>
             </div>
-        @endif
-        <!-- Files -->
-        @if(isset($files))
-            <div class="row">
-                @foreach($files as $file)
-                    <div class="col-4 mb-4">
-                        <a class="text-decoration-none" href="#">
-                            <div class="card shadow-sm">
-                                <img src="{{asset('assets/pdfLogo.png')}}" class="card-img-top" alt="..." style="height: 10em">
-                                <div class="card-body py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold text-primary">{{$file->name}}</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink" style="">
-                                            <div class="dropdown-header">File Functions:</div>
-                                            <a class="dropdown-item" href="#">Favorite</a>
-                                            <a class="dropdown-item" href="#">Download</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Delete</a>
+        </div>
+        <div id="viewContent">
+            <div class="" id="viewCard">
+                <!-- Folders -->
+                @if(isset($folders))
+                    <div class="row">
+                        @foreach($folders as $item)
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4">
+                                <a class="text-decoration-none" href="{{route('folder.view', ['file_id' => $item->id, 'view_mode' => 'card'])}}">
+                                    <div class="card mb-4 border-bottom-primary shadow-sm">
+                                        <div class="card-body">
+                                            <span class="icon text-blue-50"><i class="fa fa-folder-open"></i></span>
+                                            {{$item->name}}
                                         </div>
                                     </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+                <div class="m-5"></div>
+                <!-- Files -->
+                @if(isset($files))
+                    <div class="row">
+                        @foreach($files as $file)
+                            <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4">
+                                <a class="text-decoration-none" href="#" onclick="openImageModal({{$file->id}})">
+                                    <div class="card shadow-sm">
+                                        <div class="card-img-top mt-3" style="height: 10em; overflow: hidden;">
+                                            <img src="{{\App\Classes\Util::displayImage($file->path)}}" class="img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">
+                                        </div>
+                                        <div
+                                            class="card-body py-3 d-flex flex-row align-items-center justify-content-between">
+                                            <h6 class="m-0 font-weight-bold text-primary">{{$file->name}}</h6>
+                                            @include('utilities.file-dropdown-menu')
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+            <div class="d-none" id="viewList">
+                <!-- Folders -->
+                @if(isset($folders))
+                    <div class="list-group">
+                        @foreach($folders as $item)
+                            <a href="{{route('folder.view', ['file_id' => $item->id, 'view_mode' => 'card'])}}"
+                               class="list-group-item list-group-item-action">
+                                <i class="fa fa-folder-open mr-2 text-primary"></i> {{$item->name}}
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+
+                <div class="m-5"></div>
+
+                <!-- Files -->
+                @if(isset($files))
+                    <div class="list-group">
+                        @foreach($files as $file)
+                            <div class="list-group-item list-group-item-action">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <a href="#" onclick="openImageModal()">
+                                        <div>
+                                            <i class="fas fa-file mr-2 text-primary"></i>{{$file->name}}
+                                        </div>
+                                    </a>
+                                    @include('utilities.file-dropdown-menu')
                                 </div>
                             </div>
-                        </a>
+                        @endforeach
                     </div>
-                @endforeach
+                @endif
             </div>
-        @endif
+        </div>
     </div>
-
-    <!-- Dropzone Modal -->
-    @include('utilities.dropzone-modal', ['folder' => $folder])
 
     <!-- Dropzone Button -->
     <a class="add_file rounded bg-gradient-primary" onclick="openDropzoneModal()">
         <i class="fas fa-plus"></i>
     </a>
 
+    <!-- Dropzone Modal -->
+    @include('utilities.dropzone-modal', ['folder' => $folder])
+    <!-- View Image Modal -->
+    @include('utilities.view-file-img')
+
     <script>
-        function newFolder()
-        {
+        $(function () {
+            viewMode();
+        })
+
+        function viewMode() {
+            let viewMode = $('#viewMode');
+            let textButtonView = $('#viewButtonText');
+            let divCard = $('#viewCard');
+            let divList = $('#viewList');
+
+            if (viewMode.val() == 'card') {
+                divCard.addClass('d-none');
+                divList.removeClass('d-none');
+                viewMode.val('list');
+                textButtonView.text('View in card');
+            } else {
+                divList.addClass('d-none');
+                divCard.removeClass('d-none');
+                viewMode.val('card');
+                textButtonView.text('View in list');
+            }
+        }
+
+        function newFolder() {
             Swal.fire({
                 title: "Enter your folder name!",
                 input: "text",
@@ -88,8 +154,9 @@
                             parent_folder: fileLocal,
                         },
                         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
-                        success: function(response){
+                        success: function (response) {
                             console.log(response)
+                            location.reload();
                         }
                     });
                 },
@@ -100,8 +167,8 @@
                 }
             });
         }
-        function openDropzoneModal()
-        {
+
+        function openDropzoneModal() {
             $('#dropzoneModal').modal('show');
         }
     </script>

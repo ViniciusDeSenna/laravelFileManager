@@ -1,3 +1,5 @@
+<!-- Fox Alert-->
+{{--<script src="{{asset('assets/Foxy-Util-main/Alert/dist/FoxAlert.js')}}"></script>--}}
 <!-- Bootstrap core JavaScript-->
 <script src="{{asset('assets/vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
