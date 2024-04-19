@@ -18,8 +18,9 @@ class UtilController extends Controller
         return view('local', ['folder' => $folder, 'files'=>$files, 'folders'=>$folders]);
     }
 
-    public function returnTempLink($path)
+    public function returnTempLink(Request $request)
     {
-        return Util::displayImage($path);
+        $file = FilesModel::where('id','=', $request->id)->first();
+        return Util::displayImage($file->path);
     }
 }

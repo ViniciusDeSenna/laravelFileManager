@@ -13,9 +13,9 @@
 </div>
 
 <script>
-    {{--function downloadFile(idFile) {--}}
-    {{--    window.location.href = '{{route('files.download')}}?id=' + idFile;--}}
-    {{--}--}}
+    function downloadFile(idFile) {
+        window.location.href = '{{route('files.download')}}?id=' + idFile;
+    }
 
     function makeFavorite(idFile) {
         $.ajax({

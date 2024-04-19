@@ -47,7 +47,7 @@
                     <div class="row">
                         @foreach($files as $file)
                             <div class="col-12 col-sm-6 col-md-4 col-lg-4 col-xl-4 mb-4">
-                                <a class="text-decoration-none" href="#" onclick="openImageModal({{$file->path}})">
+                                <a class="text-decoration-none" href="#" onclick="openImageModal({{$file->id}})">
                                     <div class="card shadow-sm">
                                         <div class="card-img-top mt-3" style="height: 10em; overflow: hidden;">
                                             <img src="{{\App\Classes\Util::displayImage($file->path)}}" class="img-fluid" alt="..." style="height: 100%; width: 100%; object-fit: contain;">
