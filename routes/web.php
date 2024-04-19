@@ -19,12 +19,13 @@ Route::get('/', function () {
 
 // Util
 Route::get('files/{file_id}/{view_mode}/', [\App\Http\Controllers\UtilController::class, 'view'])->name('folder.view');
+Route::post('files/templink', [\App\Http\Controllers\UtilController::class, 'returnTempLink'])->name('files.templink');
+
 
 // Folders
-Route::post('folder/create/', [\App\Http\Controllers\FilesController::class, 'newFolder'])->name('folder.create');
+Route::post('folder/create/', [\App\Http\Controllers\FoldersController::class, 'newFolder'])->name('folder.create');
 
 // Files
 Route::post('files/upload/', [\App\Http\Controllers\FilesController::class, 'newFile'])->name('files.upload');
 Route::post('files/favorite', [\App\Http\Controllers\FilesController::class, 'favoriteFile'])->name('files.favorite');
 Route::get('files/download', [\App\Http\Controllers\FilesController::class, 'downloadFile'])->name('files.download');
-Route::get('files/download', [\App\Http\Controllers\FilesController::class, 'returnTempLink'])->name('files.templink');

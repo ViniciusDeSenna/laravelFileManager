@@ -16,10 +16,9 @@
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
             success: function (response) {
                 console.log(response)
+                $('#img-view-modal').src(response);
+                $('#exampleModal').modal('show');
             }
         });
-
-        let pathFile = '\App\Classes\Util::displayImage(' + path + ')'
-        $('#exampleModal').modal('show')
     }
 </script>
