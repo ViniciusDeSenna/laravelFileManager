@@ -70,5 +70,15 @@ class FilesController extends Controller
         }
     }
     public function deleteFile(Request $request){}
-    public function renameFile(Request $request){}
+    public function renameFile(Request $request)
+    {
+        try {
+            $file = FilesModel::where('id','=',$request->id)->first();
+            $file->name = $request->newName;
+            $file->save();
+            return response()->json(['success'=>true, 'message'=>'Arquivo atualizado']);
+        }   catch (Exception $exception){
+            return response()->json(['success' => false, 'message' => 'Erro: ' . $exception->getMessage()]);
+        }
+    }
 }

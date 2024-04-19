@@ -6,7 +6,7 @@
         <div class="dropdown-header">File Functions:</div>
         <a class="dropdown-item" onclick="makeFavorite({{$file->id}})">Favorite</a>
         <a class="dropdown-item" onclick="downloadFile({{$file->id}})">Download</a>
-        <a class="dropdown-item" onclick="">Rename</a>
+        <a class="dropdown-item" onclick="renameFile({{$file->id}})">Rename</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" >Delete</a>
     </div>
@@ -29,6 +29,34 @@
             success: function (response) {
                 console.log(response)
                 location.reload();
+            }
+        });
+    }
+
+    function renameFile(idFile) {
+        Swal.fire({
+            title: "{{$file->name}}",
+            input: "text",
+            showCancelButton: true,
+            confirmButtonText: "Change name!",
+            confirmButtonColor: '#2653d4',
+            reverseButtons: true,
+            showLoaderOnConfirm: true,
+            preConfirm: async (newName) => {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('files.rename')}}',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: idFile,
+                        newName: newName,
+                    },
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function (response) {
+                        console.log(response)
+                        location.reload();
+                    }
+                });
             }
         });
     }
