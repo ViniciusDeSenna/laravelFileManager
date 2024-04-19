@@ -29,4 +29,5 @@ Route::post('folder/create/', [\App\Http\Controllers\FoldersController::class, '
 Route::post('files/upload/', [\App\Http\Controllers\FilesController::class, 'newFile'])->name('files.upload');
 Route::post('files/favorite', [\App\Http\Controllers\FilesController::class, 'favoriteFile'])->name('files.favorite');
 Route::get('files/download', [\App\Http\Controllers\FilesController::class, 'downloadFile'])->name('files.download');
+Route::get('files/delete', [\App\Http\Controllers\FilesController::class, 'deleteFile'])->name('files.delete');
 Route::post('files/rename', [\App\Http\Controllers\FilesController::class, 'renameFile'])->name('files.rename');

@@ -8,7 +8,7 @@
         <a class="dropdown-item" onclick="downloadFile({{$file->id}})">Download</a>
         <a class="dropdown-item" onclick="renameFile({{$file->id}})">Rename</a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" >Delete</a>
+        <a class="dropdown-item" onclick="deleteFile{{$file->id}}">Delete</a>
     </div>
 </div>
 
@@ -50,6 +50,35 @@
                         _token: '{{ csrf_token() }}',
                         id: idFile,
                         newName: newName,
+                    },
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    success: function (response) {
+                        console.log(response)
+                        location.reload();
+                    }
+                });
+            }
+        });
+    }
+
+    function deleteFile(idFile) {
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#2653d4",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+            reverseButtons: true,
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('files.delete')}}',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        id: idFile,
                     },
                     headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
                     success: function (response) {

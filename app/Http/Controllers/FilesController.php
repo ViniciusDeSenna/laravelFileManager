@@ -69,7 +69,16 @@ class FilesController extends Controller
             return response()->json(['success' => false, 'message' => 'Erro: ' . $exception->getMessage()]);
         }
     }
-    public function deleteFile(Request $request){}
+    public function deleteFile(Request $request){
+        try {
+            $file = FilesModel::where('id','=',$request->id)->first();
+            $file->ativo = false;
+            $file->save();
+            return response()->json(['success'=>true, 'message'=>'Arquivo deletado']);
+        }   catch (Exception $exception){
+            return response()->json(['success' => false, 'message' => 'Erro: ' . $exception->getMessage()]);
+        }
+    }
     public function renameFile(Request $request)
     {
         try {
