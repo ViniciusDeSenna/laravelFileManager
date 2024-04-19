@@ -14,7 +14,7 @@
         <hr class="sidebar-divider my-0">
         <!-- Nav Item - Dashboard -->
         <li class="nav-item active">
-            <a class="nav-link" href="{{route('folder.view', ['file_id' => '1', 'view_mode' => 'card'])}}"><i class="fas fa-fw fa-folder"></i><span>Meus arquivos</span></a>
+            <a class="nav-link" href="{{route('folder.view', ['file_id' => '1', 'view_mode' => 'card'])}}"><i class="fas fa-fw fa-folder"></i><span>My Storage</span></a>
         </li>
         <!-- Divider -->
         <hr class="sidebar-divider">
