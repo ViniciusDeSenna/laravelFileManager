@@ -9,7 +9,7 @@ class Util
 {
     public function makePath($parentFolder)
     {
-        $parentOfParentFolder = FoldersModel::where('parent_folder_id','=',$parentFolder)->first();
+        $parentOfParentFolder = FoldersModel::where('id','=',$parentFolder)->first();
         for ($i = $parentOfParentFolder->parent_folder_id; $i != 0; $i = $parentOfParentFolder->parent_folder_id){
             $folder = FoldersModel::where('id','=',$i)->first();
             $folders[] = $folder->name;
