@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\FoldersModel;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -29,5 +30,11 @@ class DatabaseSeeder extends Seeder
             $folderPadrao->parent_folder_id = 1;
             $folderPadrao->save();
         }
+
+        $user = new User();
+        $user->name = 'Vinícius de Senna';
+        $user->email = 'vinisennab12@gmail.com';
+        $user->email_verified_at = 'Senn@tt12';
+
     }
 }
