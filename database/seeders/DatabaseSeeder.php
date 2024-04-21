@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
         $user = new User();
         $user->name = 'Vinícius de Senna';
         $user->email = 'vinisennab12@gmail.com';
-        $user->email_verified_at = 'Senn@tt12';
-
+        $user->password = 'Senn@tt12';
+        $user->save();
     }
 }
