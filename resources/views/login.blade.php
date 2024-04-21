@@ -29,15 +29,15 @@
                                 <div class="text-center">
                                     <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                 </div>
-                                <form class="user">
+                                <form class="user" method="POST" action="{{ route('login') }}">
                                     <div class="form-group">
                                         <input type="email" class="form-control form-control-user"
-                                               id="exampleInputEmail" aria-describedby="emailHelp"
+                                               id="exampleInputEmail" name="email" aria-describedby="emailHelp"
                                                placeholder="Enter Email Address...">
                                     </div>
                                     <div class="form-group">
                                         <input type="password" class="form-control form-control-user"
-                                               id="exampleInputPassword" placeholder="Password">
+                                               id="exampleInputPassword" name="password" placeholder="Password">
                                     </div>
                                     <div class="form-group">
                                         <div class="custom-control custom-checkbox small">
@@ -46,9 +46,9 @@
                                                 Me</label>
                                         </div>
                                     </div>
-                                    <a href="{{route('folder.view', ['file_id' => '1', 'view_mode' => 'card'])}}" class="btn btn-primary btn-user btn-block">
+                                    <button type="submit" class="btn btn-primary btn-user btn-block">
                                         Login
-                                    </a>
+                                    </button>
                                     <hr>
                                     <a href="index.html" class="btn btn-google btn-user btn-block">
                                         <i class="fab fa-google fa-fw"></i> Login with Google
@@ -80,27 +80,5 @@
 <script src="{{asset('assets/vendor/jquery-easing/jquery.easing.min.js')}}s"></script>
 <!-- Custom scripts for all pages-->
 <script src="{{asset('assets/js/sb-admin-2.min.js')}}"></script>
-{{--<script>--}}
-{{--    function login()--}}
-{{--    {--}}
-{{--        $.ajax({--}}
-{{--            url: '{{route('folder.view', ['local'])}}',--}}
-{{--            type: 'GET',--}}
-{{--            data: {--}}
-{{--                _token: "{{ csrf_token() }}",--}}
-{{--                parent: 'local/'--}}
-{{--            },--}}
-{{--            headers: {--}}
-{{--                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-{{--            },--}}
-{{--            success: function (data){--}}
-{{--                console.log(data)--}}
-{{--            },--}}
-{{--            error: function (data){--}}
-{{--                console.log(data)--}}
-{{--            }--}}
-{{--        })--}}
-{{--    }--}}
-{{--</script>--}}
 </body>
 </html>
